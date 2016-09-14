@@ -1,0 +1,22 @@
+{
+  "name": "proj-client-module",
+  "version": "1.0.0",
+  "description": "template",
+  "main": "proj-client-module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albraga/proj-client-module.git"
+  },
+  "keywords": [
+    "template"
+  ],
+  "author": "Alexandre Braga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/albraga/proj-client-module/issues"
+  },
+  "homepage": "https://github.com/albraga/proj-client-module#readme"
+}
