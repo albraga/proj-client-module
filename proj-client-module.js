@@ -31,7 +31,7 @@ function logout(url) {
 function update(url, id, property, value) {
     request
 	.put(url + '/' + id + '?access_token=' + localStorage.getItem('token'))
-	.send({''+ property + '': value})
+	.send({property: value})
 	.end(function(err, res) {
             console.log(err);
 	    console.log(res);
