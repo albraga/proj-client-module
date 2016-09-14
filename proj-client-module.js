@@ -28,9 +28,9 @@ function logout(url) {
     });
 }
 
-function update(url, id, property, value) {
+function update(property, value) {
     request
-	.put(url + '/' + id + '?access_token=' + localStorage.getItem('token'))
+	.put('http://31.220.53.162/api/Donors/1?access_token=' + localStorage.getItem('token'))
 	.send({property: value})
 	.end(function(err, res) {
             console.log(err);
