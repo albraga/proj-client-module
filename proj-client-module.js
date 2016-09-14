@@ -28,5 +28,25 @@ function logout(url) {
     });
 }
 
+function update(url, id, property, value) {
+    request
+	.put(url + '/' + id + '?access_token=' + localStorage.getItem('token'))
+	.send({''+ property + '': value})
+	.end(function(err, res) {
+            console.log(err);
+	    console.log(res);
+	});
+}
+
+function create(token) {
+    request
+    .post('http://31.220.53.162/api/Gifts')
+    .send({name: 'sapato', donorId: 2})
+    .end(function(err, res){
+	
+    });
+}
+
+
 module.exports.login = login;
 module.exports.logout = logout;
