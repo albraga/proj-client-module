@@ -28,10 +28,10 @@ function logout(url) {
     });
 }
 
-function update(property, value) {
+function update(value) {
     request
 	.put('http://31.220.53.162/api/Donors/1?access_token=' + localStorage.getItem('token'))
-	.send({property: value})
+	.send({username: value})
 	.end(function(err, res) {
             console.log(err);
 	    console.log(res);
