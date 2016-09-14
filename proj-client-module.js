@@ -50,3 +50,4 @@ function create(token) {
 
 module.exports.login = login;
 module.exports.logout = logout;
+module.exports.update = update;
