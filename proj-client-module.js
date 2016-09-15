@@ -1,5 +1,8 @@
 var superagent = require('superagent');
 var request = superagent.agent();
+var winston = require('winston');
+
+winston.level = 'debug';
 
 if (typeof localStorage === "undefined" || localStorage === null) {
       var LocalStorage = require('node-localstorage').LocalStorage;
@@ -7,24 +10,27 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 }
 
 function login(url, models, username, password) {
+    localStorage.setItem('token','');
     request.post(url + '/' + models + '/login').send({username: username, password: password}).end(function(err, res) {
 	if(err) {
-//	    localStorage.setItem('login-error', new Date().toGMTString() + ' ERRO: ' + err); 
+	    winston.log('debug', 'login error: ' + err);
 	    return;
-	}
-	localStorage.setItem('token', res.text.split("\"")[3]);	
+	} else {
+	    localStorage.setItem('token', res.text.split("\"")[3]);
+	    winston.log('debug', 'login ok');
+	}	
     });
 }
 
-function logout(url) {
+function logout(url, models) {
     request
-    .post(url + '/logout?access_token=' + localStorage.getItem('token'))
+    .post(url + '/' + models + '/logout?access_token=' + localStorage.getItem('token'))
     .end(function(err, res){
 	if(err) {
-//	    localStorage.setItem('logout-error', new Date().toGMTString() + ' ERRO: ' + err); 
+	    winston.log('debug', 'logout error: ' + err);
 	    return;
 	}
-//	localStorage.setItem('logout-status',  new Date().toGMTString() + ' STATUS: ' + res.status);
+	winston.log('debug', 'logout ok');
     });
 }
 
@@ -34,10 +40,11 @@ function update(url, models, id, obj) {
 	.send(obj)
 	.end(function(err, res) {
 	    if(err) {
-//		localStorage.setItem('update-error', new Date().toGMTString() + ' ERRO: ' + err); 
+		winston.log('debug', 'update error: ' + err);
 		return;
+	    } else {
+		winston.log('debug', 'update ok');
 	    }
-//	    localStorage.setItem('update-status',  new Date().toGMTString() + ' STATUS: ' + res.status);
 	});
 }
 
