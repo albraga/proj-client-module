@@ -6,10 +6,10 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./localstorage');
 }
 
-function login(url, username, password) {
-    request.post(url + '/login').send({username: username, password: password}).end(function(err, res) {
+function login(url, models, username, password) {
+    request.post(url + '/' + models + '/login').send({username: username, password: password}).end(function(err, res) {
 	if(err) {
-	    localStorage.setItem('login-error', err); 
+//	    localStorage.setItem('login-error', new Date().toGMTString() + ' ERRO: ' + err); 
 	    return;
 	}
 	localStorage.setItem('token', res.text.split("\"")[3]);	
@@ -21,20 +21,23 @@ function logout(url) {
     .post(url + '/logout?access_token=' + localStorage.getItem('token'))
     .end(function(err, res){
 	if(err) {
-	    localStorage.setItem('logout-error', err); 
+//	    localStorage.setItem('logout-error', new Date().toGMTString() + ' ERRO: ' + err); 
 	    return;
 	}
-	localStorage.setItem('logout-status', res.status);
+//	localStorage.setItem('logout-status',  new Date().toGMTString() + ' STATUS: ' + res.status);
     });
 }
 
-function update(value) {
+function update(url, models, id, obj) {
     request
-	.put('http://31.220.53.162/api/Donors/1?access_token=' + localStorage.getItem('token'))
-	.send({username: value})
+	.put(url + '/' + models + '/' + id + '?access_token=' + localStorage.getItem('token'))
+	.send(obj)
 	.end(function(err, res) {
-            console.log(err);
-	    console.log(res);
+	    if(err) {
+//		localStorage.setItem('update-error', new Date().toGMTString() + ' ERRO: ' + err); 
+		return;
+	    }
+//	    localStorage.setItem('update-status',  new Date().toGMTString() + ' STATUS: ' + res.status);
 	});
 }
 
