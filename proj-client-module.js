@@ -9,9 +9,9 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./localstorage');
 }
 
-function login(url, models, username, password) {
+function login(url, model, username, password) {
     localStorage.setItem('token','');
-    request.post(url + '/' + models + '/login').send({username: username, password: password}).end(function(err, res) {
+    request.post(url + '/' + model + '/login').send({username: username, password: password}).end(function(err, res) {
 	if(err) {
 	    winston.log('debug', 'login error: ' + err);
 	    return;
@@ -22,9 +22,9 @@ function login(url, models, username, password) {
     });
 }
 
-function logout(url, models) {
+function logout(url, model) {
     request
-    .post(url + '/' + models + '/logout?access_token=' + localStorage.getItem('token'))
+    .post(url + '/' + model + '/logout?access_token=' + localStorage.getItem('token'))
     .end(function(err, res){
 	if(err) {
 	    winston.log('debug', 'logout error: ' + err);
@@ -34,9 +34,9 @@ function logout(url, models) {
     });
 }
 
-function update(url, models, id, obj) {
+function update(url, model, id, obj) {
     request
-	.put(url + '/' + models + '/' + id + '?access_token=' + localStorage.getItem('token'))
+	.put(url + '/' + model + '/' + id + '?access_token=' + localStorage.getItem('token'))
 	.send(obj)
 	.end(function(err, res) {
 	    if(err) {
