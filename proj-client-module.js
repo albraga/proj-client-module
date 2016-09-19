@@ -48,12 +48,17 @@ function update(url, model, id, obj) {
 	});
 }
 
-function create(token) {
+function create(url, model, obj) {
     request
-    .post('http://31.220.53.162/api/Gifts')
-    .send({name: 'sapato', donorId: 2})
+    .post(url + '/' + model + '?access_token=' + localStorage.getItem('token'))
+    .send(obj)
     .end(function(err, res){
-	
+	if(err) {
+		winston.log('debug', 'create error: ' + err);
+		return;
+	    } else {
+		winston.log('debug', 'create ok');
+	    }
     });
 }
 
@@ -61,3 +66,4 @@ function create(token) {
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.update = update;
+module.exports.create = create;
