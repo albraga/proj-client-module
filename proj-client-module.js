@@ -62,8 +62,53 @@ function create(url, model, obj) {
     });
 }
 
+function del(url, model, id) {
+    request
+	.del(url + '/' + model + '/' + id + '?access_token=' + localStorage.getItem('token'))
+	.end(function(err, res) {
+	    if(err) {
+		winston.log('debug', 'delete error: ' + err);
+		return;
+	    } else {
+		winston.log('debug', 'delete ok');
+	    }
+	});
+}
+
+function getAll(url, model) {
+    localStorage.setItem('getall', 'vazio');
+    request
+	.get(url + '/' + model + '?access_token=' + localStorage.getItem('token'))
+	.end(function(err, res) {
+	    if(err) {
+		winston.log('debug', 'getAll error: ' + err);
+		return;
+	    } else {
+		winston.log('debug', 'getAll ok');
+		localStorage.setItem('getall', JSON.stringify(res.text));
+	    }
+	});
+}
+
+function get(url, model, id) {
+    localStorage.setItem('get', 'vazio');
+    request
+	.get(url + '/' + model + '/' + id + '?access_token=' + localStorage.getItem('token'))
+	.end(function(err, res) {
+	    if(err) {
+		winston.log('debug', 'get error: ' + err);
+		return;
+	    } else {
+		winston.log('debug', 'get ok');
+		localStorage.setItem('get', JSON.stringify(res.text));
+	    }
+	});
+}
 
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.update = update;
 module.exports.create = create;
+module.exports.delete = del;
+module.exports.getAll = getAll;
+module.exports.get = get;
